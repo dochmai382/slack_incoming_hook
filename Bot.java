@@ -8,14 +8,16 @@ public class Bot {
         // 웹훅 -> URL 필요함
         // 환경변수로 받아올 것임 -> yml 파일에서 전달하게
         String webhookUrl = System.getenv("SLACK_WEBHOOK_URL");
+        String message = System.getenv("SLACK_WEBHOOK_MSG");
 
         // Java 11 -> fetch
         HttpClient client = HttpClient.newHttpClient();
-        // 요청을 얹힐 것다
+        // 요청을 얹힐 거다
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(webhookUrl))
             .header("Content-Type", "application/json")
-            .POST(HttpRequest.BodyPublishers.ofString("{\"text\":\"테스트 메시지\"}"))
+            // .POST(HttpRequest.BodyPublishers.ofString("{\"text\":\"테스트 메시지\"}")) 
+            .POST(HttpRequest.BodyPublishers.ofString("{\"text\":\" + " + message + "\"}")) 
             .build();
         
         try {
